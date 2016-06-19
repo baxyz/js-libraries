@@ -13,10 +13,10 @@ QUnit.module('Geolocation', function() {
 		assert.throws(
 			function() { Geolocation.isWithinDistance(53.3381985, -6.2592576, -1, 52.986375, -6.043701) },
 			/distance/,
-			'Distance negative: passed!');
+			'Distance negative: checked!');
 		assert.throws(
 			function() { Geolocation.isWithinDistance(53.3381985, -6.2592576, 40031, 52.986375, -6.043701) },
 			/distance/,
-			'Distance too high: passed!');
+			'Distance too high: checked!');
 	});
 });
