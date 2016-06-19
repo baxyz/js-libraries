@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Test page for the JS Array Library">
+		<meta name="author" content="Bérenger ARNAUD">
+		<title>Test page for the JS Array Library</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/slate/bootstrap.min.css">
+		<script src="array.lib.js"></script>
+
+</head>
+<body>
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Test for Array</h1>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<h2>Empty Array</h2>
+				<blockquote>
+					<small>Input:</small>
+					<p>[].flat()</p>
+					<small>Output (expected):</small>
+					<p>[]</p>
+					<small>Output (your browser):</small>
+					<p><script>document.write(JSON.stringify([].flat()));</script></p>
+				</blockquote>
+			</div>
+			<div class="col-md-4">
+				<h2>Nested array <small>with integers</small></h2>
+				<blockquote>
+					<small>Input:</small>
+					<p>[[1,2,[3]],4].flat()</p>
+					<small>Output (expected):</small>
+					<p>[1,2,3,4]</p>
+					<small>Output (your browser):</small>
+					<p><script>document.write(JSON.stringify([[1,2,[3]],4].flat()));</script></p>
+				</blockquote>
+			</div>
+			<div class="col-md-4">
+				<h2>Nested array <small>with objects</small></h2>
+				<blockquote>
+					<small>Input:</small>
+					<p>[{a:1,b:1},[[[{c:2}],{}],[{d:4}]],{e:5}].flat()</p>
+					<small>Output (expected):</small>
+					<p>[{a:1,b:1},{c:2},{},{d:4},{e:5}]</p>
+					<small>Output (your browser):</small>
+					<p><script>document.write(JSON.stringify([{a:1,b:1},[[[{c:2}],{}],[{d:4}]],{e:5}].flat()));</script></p>
+				</blockquote>
+			</div>
+		</div>
+	</div>
+
+	<hr>
+	<footer>
+		<p>&rarr; Bérenger ARNAUD 2016</p>
+	</footer>
+</body>
+</html>
