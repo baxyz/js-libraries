@@ -1,7 +1,7 @@
 /**
  * Since Array is a standard JS object, we directly modifying the prototype
  */
-(function () {
+(function() {
 
 	/**
 	 * Flat a nested array into a flat array. The result is a new Array of object that not contains any other Array. 
