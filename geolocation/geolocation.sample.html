@@ -29,6 +29,41 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6">
+				<h2>distance()</h2>
+				<p>Parameters:</p>
+				<ul class="list-group">
+					<li class="list-group-item">
+						<span class="badge">in WGS'84 (GPS)</span>
+						<h4 class="list-group-item-heading">Center latitude</h4>
+						The latitude coordinate of the center of the targeted area
+					</li>
+					<li class="list-group-item">
+						<span class="badge">in WGS'84 (GPS)</span>
+						<h4 class="list-group-item-heading">Center longitude</h4>
+						The longitude coordinate of the center of the targeted area
+					</li>
+					<li class="list-group-item">
+						<span class="badge">in WGS'84 (GPS)</span>
+						<h4 class="list-group-item-heading">Point latitude</h4>
+						The latitude coordinate of the requested point
+					</li>
+					<li class="list-group-item">
+						<span class="badge">in WGS'84 (GPS)</span>
+						<h4 class="list-group-item-heading">Point longitude</h4>
+						The longitude coordinate of the requested point
+					</li>
+				</ul>
+				<p>Sample:</p>
+				<blockquote>
+					<small>Input:</small>
+					<p>Geolocation.distance(53.3381985, -6.2592576, 52.986375, -6.043701);</p>
+					<small>Output (expected):</small>
+					<p>41.6768391</p>
+					<small>Output (your browser):</small>
+					<p><script>document.write(JSON.stringify(Geolocation.distance(53.3381985, -6.2592576, 52.986375, -6.043701)));</script></p>
+				</blockquote>
+			</div>
+			<div class="col-md-6">
 				<h2>isWithinDistance()</h2>
 				<p>Parameters:</p>
 				<ul class="list-group">
