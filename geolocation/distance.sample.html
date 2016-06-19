@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="distanceApp">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Test page for the JS Geolocation Library">
+		<meta name="author" content="Bérenger ARNAUD">
+		<title>Test page for the JS Geolocation Library</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/slate/bootstrap.min.css">
+</head>
+<body ng-controller="distanceCtrl">
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Who is within 100 km of Dublin?</h1>
+		</div>
+	</div>
+
+	<div class="container">
+		<div ng-if="isDownloading" class="alert alert-info">
+			<strong>Downloading the data...</strong>
+		</div>
+		<div ng-if="hasError" class="alert alert-danger">
+			<strong>An error occurs!</strong> We cannot download the data for some reason. 
+		</div>
+
+		<p>
+			The targeted area is 100 km around {{center.name}} ({{center.lat}}, {{center.lon}}).<br />
+			Source file:
+			<a href="https://gist.github.com/brianw/19896c50afa89ad4dec3" target="_blank">https://gist.github.com/brianw/19896c50afa89ad4dec3</a> 
+		</p>
+
+		<div ng-if="hasResult" class="row">
+			<div class="col-md-6">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title">Within 100 km</h3>
+					</div>
+					<ul class="list-group">
+						<li ng-repeat="person in withinList" class="list-group-item">
+							<span class="badge">{{person.distance | number : 0}} km</span>
+							{{person.name}} <span class="text-muted">[{{person.user_id}}]</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-danger">
+					<div class="panel-heading">
+						<h3 class="panel-title">Too far away</h3>
+					</div>
+					<ul class="list-group">
+						<li ng-repeat="person in farawayList" class="list-group-item">
+							<span class="badge">{{person.distance | number : 0}} km</span>
+							{{person.name}} <span class="text-muted">[{{person.user_id}}]</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<hr>
+	<footer>
+		<div class="container">
+			<p>&rarr; Bérenger ARNAUD 2016</p>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="geolocation.lib.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
+	<script>
+		angular.module('distanceApp', [])
+			.controller('distanceCtrl', ['$scope', '$http', function($scope, $http) {
+				// Init
+				var center = {
+					name: 'Dublin',
+					lat: 53.3381985,
+					lon: -6.2592576
+				}
+				$scope.center = center;
+
+				// Download data
+				$scope.isDownloading = true;
+				$http({
+					url: 'https://gist.githubusercontent.com/brianw/19896c50afa89ad4dec3/raw/6c11047887a03483c50017c1d451667fd62a53ca/gistfile1.txt',
+					method: 'GET',
+					transformResponse: function(data) {
+						// Split line break
+						var dataList = data.split(/\r?\n/);
+
+						// Parse JSON
+						var parsedList = [];
+						dataList.forEach(function(element) {
+							parsedList.push(JSON.parse(element));
+						});
+
+						// Return the parsed list
+						return parsedList;
+					}
+				}).then(function successCallback(response) {
+						// Build lists
+						$scope.withinList = [];
+						$scope.farawayList = [];
+
+						// Treat every elements
+						//	--> check the distance around Dublin
+						response.data.forEach(function(person) {
+							person.distance = Geolocation.distance(53.3381985, -6.2592576, person.latitude, person.longitude);
+							person.isWithin = Geolocation.isWithinDistance(53.3381985, -6.2592576, 100, person.latitude, person.longitude);
+
+							if (person.isWithin) {
+								$scope.withinList.push(person);
+							} else {
+								$scope.farawayList.push(person);
+							}
+						});
+
+						// Updata UI
+						$scope.isDownloading = false;
+						$scope.hasResult = true;
+					}, function errorCallback(response) {
+						// Updata UI
+						$scope.isDownloading = false;
+						$scope.hasError = true;
+					});
+			}])
+	</script>
+</body>
+</html>
