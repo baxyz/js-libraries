@@ -37,7 +37,7 @@
 						<h3 class="panel-title">Within 100 km</h3>
 					</div>
 					<ul class="list-group">
-						<li ng-repeat="person in withinList" class="list-group-item">
+						<li ng-repeat="person in withinList | orderBy : 'user_id'" class="list-group-item">
 							<span class="badge">{{person.distance | number : 0}} km</span>
 							{{person.name}} <span class="text-muted">[{{person.user_id}}]</span>
 						</li>
@@ -50,7 +50,7 @@
 						<h3 class="panel-title">Too far away</h3>
 					</div>
 					<ul class="list-group">
-						<li ng-repeat="person in farawayList" class="list-group-item">
+						<li ng-repeat="person in farawayList | orderBy : 'user_id'" class="list-group-item">
 							<span class="badge">{{person.distance | number : 0}} km</span>
 							{{person.name}} <span class="text-muted">[{{person.user_id}}]</span>
 						</li>
